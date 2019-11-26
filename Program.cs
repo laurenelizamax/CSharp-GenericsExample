@@ -80,7 +80,7 @@ namespace GenericsExample
             if (selection == "1")
             {
                 var dvdPage = dvdPager.GetCurrentPage();
-                dvdPage.ForEach(b => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
+                dvdPage.ForEach(m => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
             }
             while (true)
             {
@@ -91,12 +91,12 @@ namespace GenericsExample
                 if (forwardOrBack == "Next")
                 {
                     var nextPage = dvdPager.GetNextPage();
-                    nextPage.ForEach(b => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
+                    nextPage.ForEach(m => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
                 }
                 else if (forwardOrBack == "Previous")
                 {
                     var previousPage = dvdPager.GetPreviousPage();
-                    previousPage.ForEach(b => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
+                    previousPage.ForEach(m => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
                 }
                 else
                 {
@@ -108,28 +108,29 @@ namespace GenericsExample
                 {
                     var bookPage = bookPager.GetCurrentPage();
                     bookPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
+                }
+                while (true)
+                {
+                    Console.WriteLine("Type Next or Previous to go forward or back");
+                    forwardOrBack = Console.ReadLine();
+                    Console.Clear();
 
-                    while (true)
+                    if (forwardOrBack == "Next")
                     {
-                        Console.WriteLine("Type Next or Previous to go forward or back");
-                        forwardOrBack = Console.ReadLine();
-                        Console.Clear();
-
-                        if (forwardOrBack == "Next")
-                        {
-                            var nextPage = bookPager.GetNextPage();
-                            nextPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
-                        }
-                        else if (forwardOrBack == "Previous")
-                        {
-                            var previousPage = bookPager.GetPreviousPage();
-                            previousPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        var nextPage = bookPager.GetNextPage();
+                        nextPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
+                    }
+                    else if (forwardOrBack == "Previous")
+                    {
+                        var previousPage = bookPager.GetPreviousPage();
+                        previousPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
         }
+    }
+}
