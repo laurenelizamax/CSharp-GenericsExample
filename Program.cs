@@ -66,8 +66,12 @@ namespace GenericsExample
                 new Book { Id = 20, Author = "James Joyce", Title = "Ulysses" },
                 new Book { Id = 21, Author = "Franz Kafka", Title = "Stories" },
             };
-        
-            Console.WriteLine("Which listings would you like to see?");
+
+            // new variable of pager type Book or DVD
+            var bookPager = new Pager<Book>(allBooks);
+            var dvdPager = new Pager<DVD>(allMovies);
+
+            Console.WriteLine("Which listings would you like to see, 1 or 2?");
             Console.WriteLine("1. Movies");
             Console.WriteLine("2. Books");
 
@@ -75,13 +79,57 @@ namespace GenericsExample
 
             if (selection == "1")
             {
-                allMovies.ForEach(m => Console.WriteLine($"{m.Title} ({m.Genre})"));
+                var dvdPage = dvdPager.GetCurrentPage();
+                dvdPage.ForEach(b => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
             }
-
-            if (selection == "2")
+            while (true)
             {
-                allBooks.ForEach(b => Console.WriteLine($"{b.Title} by {b.Author}"));
+                Console.WriteLine("Type Next or Previous to go forward or back");
+                var forwardOrBack = Console.ReadLine();
+                Console.Clear();
+
+                if (forwardOrBack == "Next")
+                {
+                    var nextPage = dvdPager.GetNextPage();
+                    nextPage.ForEach(b => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
+                }
+                else if (forwardOrBack == "Previous")
+                {
+                    var previousPage = dvdPager.GetPreviousPage();
+                    previousPage.ForEach(b => Console.WriteLine($"{m.Id}. {m.Title} by {m.Genre}"));
+                }
+                else
+                {
+                    break;
+                }
+
+                // Books
+                if (selection == "2")
+                {
+                    var bookPage = bookPager.GetCurrentPage();
+                    bookPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
+
+                    while (true)
+                    {
+                        Console.WriteLine("Type Next or Previous to go forward or back");
+                        forwardOrBack = Console.ReadLine();
+                        Console.Clear();
+
+                        if (forwardOrBack == "Next")
+                        {
+                            var nextPage = bookPager.GetNextPage();
+                            nextPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
+                        }
+                        else if (forwardOrBack == "Previous")
+                        {
+                            var previousPage = bookPager.GetPreviousPage();
+                            previousPage.ForEach(b => Console.WriteLine($"{b.Id}. {b.Title} by {b.Author}"));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
             }
         }
-    }
-}
